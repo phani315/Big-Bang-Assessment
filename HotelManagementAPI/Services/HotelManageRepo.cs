@@ -1,5 +1,6 @@
 ﻿using HotelManagementAPI.Interfaces;
 using HotelManagementAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace HotelManagementAPI.Services
@@ -34,7 +35,12 @@ namespace HotelManagementAPI.Services
         }
         public ICollection<Hotel> GetAll()
         {
-            return _context.Hotels.ToList();
+            var hotels = _context.Hotels.ToList();
+            if (hotels.Count > 0)
+            {
+                return hotels;
+            }
+            return null;
         }
         public Hotel Get(int key)
         {
@@ -59,7 +65,9 @@ namespace HotelManagementAPI.Services
             {
                 hotel.Name = item.Name;
                 hotel.Id = item.Id;
-                hotel.NoOfRoomsAvailable = item.NoOfRoomsAvailable;
+                hotel.Amenities = hotel.Amenities + item.Amenities;
+                hotel.Location=item.Location;
+                hotel.CustomerRating = item.CustomerRating;
                 _context.SaveChanges();
             }
             return hotel;

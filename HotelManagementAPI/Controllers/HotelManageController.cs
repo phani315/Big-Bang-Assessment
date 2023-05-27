@@ -37,11 +37,23 @@ namespace HotelManagementAPI.Controllers
         }
 
 
-
-
         [HttpGet]
-        [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Hotel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Hotel> Get(int key)
+        {
+            Hotel hotels = _repo.Get(key);
+            if (hotels != null)
+                return Ok(hotels);
+            return NotFound("No hotel available");
+        }
+
+
+
+
+        //[HttpGet]
+        //[ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
         //public ActionResult<List<Hotel>> FetchAllHotelsBasedOnCategory(string category)
         //{
         //    var hotels = _hotelservice.GetHotelsBasedonType(category);
@@ -54,13 +66,31 @@ namespace HotelManagementAPI.Controllers
         //}
 
 
+        [Authorize(Roles ="admin")]
+        [HttpGet]
+        [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult FetchAllHotelsBasedOnLocation(string location)
+        {
+            var hotels = _hotelservice.GetHotelsByLocation(location);
+            if (hotels.Count == 0)
+            {
+                return NotFound("No Hotels  available");
+            }
+            return Ok(hotels);
+
+        }
+
+
+
+
 
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<Hotel>> FetchAllHotelsBasedOnLocation(string location)
+        public ActionResult<List<Hotel>> FetchHotelsWithinAPriceRange(int min, int max)
         {
-            var hotels = _hotelservice.GetHotelsByLocation(location);
+            var hotels = _hotelservice.GetHotelsByPrice(min,max);
             if (hotels.Count == 0)
             {
                 return NotFound("No Hotels  available");
@@ -73,24 +103,50 @@ namespace HotelManagementAPI.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-      
+        public ActionResult<List<Hotel>> FetchHotelsByAmenity(string amenity)
+        {
+            var hotels = _hotelservice.GetHotelsByAmenity(amenity);
+            if (hotels.Count == 0)
+            {
+                return NotFound("No Hotels  available");
+            }
+            return Ok(hotels);
 
-        //[HttpGet]
-        //[ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public ActionResult<List<Hotel>> FetchHotelsWithinAPriceRange(int min,int max)
-        //{
-        //    var hotels = _hotelservice.GetHotelsByPrice( min,  max);
-        //    if (hotels.Count == 0)
-        //    {
-        //        return NotFound("No Hotels  available");
-        //    }
-        //    return Ok(hotels);
+        }
 
-        //}
+        [HttpGet]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<int> FetchNoofRoomsAvailable(string hotelname)
+        {
+            int hotels = _hotelservice.CountOfRoomsAvailable(hotelname);
+            if (hotels == 0)
+            {
+                return NotFound("No Rooms  available");
+            }
+            return Ok(hotels +" rooms are available");
+
+        }
+        [HttpGet]
+        [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<Hotel>> SortHotelsByRating()
+        {
+            var hotels = _hotelservice.SortByRating();
+            if (hotels.Count == 0)
+            {
+                return NotFound("No Hotels  available");
+            }
+            return Ok(hotels);
+
+        }
+
+
+
+
+
 
         [HttpPost]
-
         public ActionResult<Hotel> Post(Hotel hotel)
         {
             Hotel prod = _repo.Add(hotel);

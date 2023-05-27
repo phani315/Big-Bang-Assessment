@@ -4,7 +4,7 @@
     {
         ICollection<T> GetAll();
 
-
+        T Get(int id);
         T Update(T item);
         T Delete(k key);
 

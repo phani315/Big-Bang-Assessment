@@ -7,23 +7,21 @@ namespace HotelManagementAPI.Services
     {
 
         private readonly IRepo<int, Hotel> _hotelrepo;
+        private readonly IRepo<int, Room> _roomRepo;
 
 
-        public HotelService(IRepo<int, Hotel> hotel_repo)
+
+
+        public HotelService(IRepo<int, Hotel> hotel_repo, IRepo<int, Room> roomrepo)
         {
             _hotelrepo = hotel_repo;
+            _roomRepo = roomrepo;
         }
 
 
 
-        //public ICollection<Hotel> GetHotelsBasedonType(string type)
-        //{
-        //    var rooms = _roomrepo.GetAll().Where(c => c.RoomType == type);
-        //    return rooms.ToList();
 
-        //}
-
-       public ICollection<Hotel>GetHotelsByLocation(string location)
+        public ICollection<Hotel>GetHotelsByLocation(string location)
         {
             var hotels = _hotelrepo.GetAll().Where(c => c.Location == location);
 
@@ -32,29 +30,77 @@ namespace HotelManagementAPI.Services
 
         }
 
-        //public List<Hotel> GetHotelsByPrice(int min, int max)
-        //{
-        //    if (max < min)
-        //        return null;
-        //    List<Hotel> hotels = _hotelrepo.GetAll().ToList();
-        //    List<Room> rooms = new List<Room>();
-        //    rooms = rooms.Where(p => p.RoomPrice >= min && p.RoomPrice <= max).ToList();
-        //    for(int i = 0; i < rooms.Count; i++)
-        //    {
-        //        if (rooms[i].HotelId == hotels)
-        //    }
-        //    return hotels;
-        //}
+        public ICollection<Hotel> GetHotelsByPrice(int min, int max)
+        {
+            var rooms = _roomRepo.GetAll().Where(r => r.RoomPrice >= min && r.RoomPrice <= max).ToList();
+            List<Hotel> hotels = new List<Hotel>();
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                if (rooms[i].RoomPrice >= min && rooms[i].RoomPrice <= max)
+                {
+                    hotels.Add(_hotelrepo.Get(rooms[i].HotelId));
+                }
+            }
+            if (hotels != null)
+            {
+                return hotels;
+            }
+            return null;
+        }
+
+        public ICollection<Hotel> GetHotelsByAmenity(string amenity)
+        {
+            var hotels = _hotelrepo.GetAll().ToList();
+            List<Hotel> hotelswithAmenity = new List<Hotel>();
+            for (int i = 0; i < hotels.Count; i++)
+            {
+                string[] amenitieslist = hotels[i].Amenities.Split(',');
+                if (amenitieslist.Contains(amenity))
+                {
+                    hotelswithAmenity.Add(_hotelrepo.Get(hotels[i].Id));
+                }
+            }
+            if (hotels != null)
+            {
+                return hotels;
+            }
+            return null;
+        }
+
+        public int CountOfRoomsAvailable (string hotelname)
+        {
+            int count = 0;
+            var hotels = _hotelrepo.GetAll();
+
+            List<Hotel> hotel = _hotelrepo.GetAll().Where(c => c.Name == hotelname).ToList();
+            if (hotel.Count>=1)
+            {
+                int hotelid = hotel[0].Id;
+                var rooms = _roomRepo.GetAll().Where(r => r.Status == "not booked" && r.HotelId == hotelid).ToList();
+                count = rooms.Count;
+
+            }
+            
+            return count;
+        }
+        public ICollection<Hotel> SortByRating()
+        {
+            var hotels = _hotelrepo.GetAll().ToList();
+            List<Hotel> sortbyrating = new List<Hotel>();
+            sortbyrating = (List<Hotel>)_hotelrepo.GetAll().OrderByDescending(o => o.CustomerRating).ToList();
 
 
-        //public ICollection<Hotel> GetHotelsByDateOfAvailability(DateTime date)
-        //{
-        //    var hotels = _hotelrepo.GetAll().Where(c => c.DateOfAvailability == date);
+            if (sortbyrating != null)
+            {
+                return sortbyrating;
+            }
+            return null;
+        }
 
 
-        //    return hotels.ToList();
 
-        //}
+
+
 
 
     }

@@ -17,6 +17,8 @@ namespace HotelManagementAPI.Models
 
             }
             public DbSet<Hotel> Hotels { get; set; }
-        public DbSet<Room> Rooms {  get; set; }
-        }
+            public DbSet<Room> Rooms { get; set; }
+
+
+    }
 }
