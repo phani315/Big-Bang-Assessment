@@ -4,7 +4,12 @@
     {
         ICollection<T> GetAll();
 
-        T Get(k key);
+
+        T Update(T item);
+        T Delete(k key);
+
+        T Add(T item);
+
 
 
     }

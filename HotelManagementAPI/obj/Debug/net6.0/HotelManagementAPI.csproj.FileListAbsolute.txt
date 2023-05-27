@@ -66,3 +66,4 @@ C:\Users\phani\Desktop\internship\c#\BigBangAssesment\HotelManagementAPI\obj\Deb
 C:\Users\phani\Desktop\internship\c#\BigBangAssesment\HotelManagementAPI\obj\Debug\net6.0\HotelManagementAPI.pdb
 C:\Users\phani\Desktop\internship\c#\BigBangAssesment\HotelManagementAPI\obj\Debug\net6.0\HotelManagementAPI.genruntimeconfig.cache
 C:\Users\phani\Desktop\internship\c#\BigBangAssesment\HotelManagementAPI\obj\Debug\net6.0\ref\HotelManagementAPI.dll
+C:\Users\phani\Desktop\internship\c#\BigBangAssesment\HotelManagementAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
