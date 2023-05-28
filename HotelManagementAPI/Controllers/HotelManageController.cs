@@ -21,7 +21,7 @@ namespace HotelManagementAPI.Controllers
 
         }
 
-        [Authorize(Roles ="admin")]
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -36,7 +36,7 @@ namespace HotelManagementAPI.Controllers
 
         }
 
-
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(Hotel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,22 +51,8 @@ namespace HotelManagementAPI.Controllers
 
 
 
-        //[HttpGet]
-        //[ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public ActionResult<List<Hotel>> FetchAllHotelsBasedOnCategory(string category)
-        //{
-        //    var hotels = _hotelservice.GetHotelsBasedonType(category);
-        //    if (hotels.Count == 0)
-        //    {
-        //        return NotFound("No Hotels  available");
-        //    }
-        //    return Ok(hotels);
 
-        //}
-
-
-        [Authorize(Roles ="admin")]
+        [Authorize]]
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -83,7 +69,7 @@ namespace HotelManagementAPI.Controllers
 
 
 
-
+        [Authorize]
 
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
@@ -99,6 +85,7 @@ namespace HotelManagementAPI.Controllers
 
         }
 
+        [Authorize]
 
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
@@ -113,7 +100,7 @@ namespace HotelManagementAPI.Controllers
             return Ok(hotels);
 
         }
-
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -127,6 +114,8 @@ namespace HotelManagementAPI.Controllers
             return Ok(hotels +" rooms are available");
 
         }
+
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -144,7 +133,7 @@ namespace HotelManagementAPI.Controllers
 
 
 
-
+        [Authorize(Roles ="admin")]
 
         [HttpPost]
         public ActionResult<Hotel> Post(Hotel hotel)
@@ -152,6 +141,7 @@ namespace HotelManagementAPI.Controllers
             Hotel prod = _repo.Add(hotel);
             return Created("HotelListing", prod);
         }
+        [Authorize(Roles = "admin")]
 
         [HttpDelete]
         [ProducesResponseType(typeof(Hotel), StatusCodes.Status200OK)]
@@ -165,6 +155,8 @@ namespace HotelManagementAPI.Controllers
             }
             return BadRequest("Unable to delete the hotel");
         }
+
+        [Authorize(Roles = "admin")]
 
         [HttpPut]
         [ProducesResponseType(typeof(Hotel), StatusCodes.Status200OK)]

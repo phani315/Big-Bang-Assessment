@@ -1,5 +1,6 @@
 ﻿using HotelManagementAPI.Interfaces;
 using HotelManagementAPI.Models;
+using System.Diagnostics;
 
 namespace HotelManagementAPI.Services
 {
@@ -32,37 +33,51 @@ namespace HotelManagementAPI.Services
 
         public ICollection<Hotel> GetHotelsByPrice(int min, int max)
         {
-            var rooms = _roomRepo.GetAll().Where(r => r.RoomPrice >= min && r.RoomPrice <= max).ToList();
-            List<Hotel> hotels = new List<Hotel>();
-            for (int i = 0; i < rooms.Count; i++)
+            try
             {
-                if (rooms[i].RoomPrice >= min && rooms[i].RoomPrice <= max)
+                var rooms = _roomRepo.GetAll().Where(r => r.RoomPrice >= min && r.RoomPrice <= max).ToList();
+                List<Hotel> hotels = new List<Hotel>();
+                for (int i = 0; i < rooms.Count; i++)
                 {
-                    hotels.Add(_hotelrepo.Get(rooms[i].HotelId));
+                    if (rooms[i].RoomPrice >= min && rooms[i].RoomPrice <= max)
+                    {
+                        hotels.Add(_hotelrepo.Get(rooms[i].HotelId));
+                    }
+                }
+                if (hotels != null)
+                {
+                    return hotels;
                 }
             }
-            if (hotels != null)
-            {
-                return hotels;
+            catch(Exception e) {
+                Debug.WriteLine(e.Message);
             }
+           
             return null;
         }
 
         public ICollection<Hotel> GetHotelsByAmenity(string amenity)
         {
-            var hotels = _hotelrepo.GetAll().ToList();
-            List<Hotel> hotelswithAmenity = new List<Hotel>();
-            for (int i = 0; i < hotels.Count; i++)
+
+            try
             {
-                string[] amenitieslist = hotels[i].Amenities.Split(',');
-                if (amenitieslist.Contains(amenity))
+                var hotels = _hotelrepo.GetAll().ToList();
+                List<Hotel> hotelswithAmenity = new List<Hotel>();
+                for (int i = 0; i < hotels.Count; i++)
                 {
-                    hotelswithAmenity.Add(_hotelrepo.Get(hotels[i].Id));
+                    string[] amenitieslist = hotels[i].Amenities.Split(',');
+                    if (amenitieslist.Contains(amenity))
+                    {
+                        hotelswithAmenity.Add(_hotelrepo.Get(hotels[i].Id));
+                    }
+                }
+                if (hotels != null)
+                {
+                    return hotels;
                 }
             }
-            if (hotels != null)
-            {
-                return hotels;
+            catch(Exception e) {
+                Debug.WriteLine(e.Message);
             }
             return null;
         }
@@ -70,18 +85,26 @@ namespace HotelManagementAPI.Services
         public int CountOfRoomsAvailable (string hotelname)
         {
             int count = 0;
-            var hotels = _hotelrepo.GetAll();
 
-            List<Hotel> hotel = _hotelrepo.GetAll().Where(c => c.Name == hotelname).ToList();
-            if (hotel.Count>=1)
+            try
             {
-                int hotelid = hotel[0].Id;
-                var rooms = _roomRepo.GetAll().Where(r => r.Status == "not booked" && r.HotelId == hotelid).ToList();
-                count = rooms.Count;
+                var hotels = _hotelrepo.GetAll();
 
+                List<Hotel> hotel = _hotelrepo.GetAll().Where(c => c.Name == hotelname).ToList();
+                if (hotel.Count >= 1)
+                {
+                    int hotelid = hotel[0].Id;
+                    var rooms = _roomRepo.GetAll().Where(r => r.Status == "not booked" && r.HotelId == hotelid).ToList();
+                    count = rooms.Count;
+
+                }
+
+                return count;
             }
+            catch(Exception e) { 
+                Debug.WriteLine(e.Message);
             
-            return count;
+            }return count;
         }
         public ICollection<Hotel> SortByRating()
         {

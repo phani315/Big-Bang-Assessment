@@ -24,7 +24,7 @@ namespace BookingAPI.Controllers
 
         }
 
-
+        [Authorize(Roles ="admin")]
         [HttpGet]
         [ProducesResponseType(typeof(List<Booking>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -39,7 +39,7 @@ namespace BookingAPI.Controllers
 
         }
 
-
+        [Authorize(Roles="admin")]
         [HttpGet]
         [ProducesResponseType(typeof(Booking), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,13 +51,14 @@ namespace BookingAPI.Controllers
             return NotFound("Bookings are Empty");
         }
 
-
+        [Authorize(Roles ="user")]
         [HttpPost]
         public ActionResult<Booking> BookAHotel(Booking booking)
         {
             Booking book = _repo.Add(booking);
             return Created("BookingList", book);
         }
+        [Authorize(Roles = "admin")]
 
         [HttpDelete]
         [ProducesResponseType(typeof(Booking), StatusCodes.Status200OK)]
@@ -71,6 +72,8 @@ namespace BookingAPI.Controllers
             }
             return BadRequest("Unable to delete the booking record");
         }
+        [Authorize(Roles = "admin")]
+
 
         [HttpPut]
         [ProducesResponseType(typeof(Booking), StatusCodes.Status200OK)]
@@ -85,6 +88,7 @@ namespace BookingAPI.Controllers
             return Ok(updateBooking);
         }
 
+        [Authorize(Roles ="user")]
         [HttpPut]
         [ProducesResponseType(typeof(Booking), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

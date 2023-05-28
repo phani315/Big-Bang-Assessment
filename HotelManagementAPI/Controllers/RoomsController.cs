@@ -1,12 +1,14 @@
 ﻿using HotelManagementAPI.Interfaces;
 using HotelManagementAPI.Models;
 using HotelManagementAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class RoomsController : ControllerBase
     {
         private readonly IRepo<int, Room> _repo;

@@ -34,43 +34,79 @@ namespace HotelManagementAPI.Services
             return null;
         }
         public ICollection<Hotel> GetAll()
+
         {
-            var hotels = _context.Hotels.ToList();
-            if (hotels.Count > 0)
+            try
             {
-                return hotels;
+                var hotels = _context.Hotels.ToList();
+                if (hotels.Count > 0)
+                {
+                    return hotels;
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
             return null;
         }
         public Hotel Get(int key)
         {
-            Hotel hotel = _context.Hotels.SingleOrDefault(p => p.Id == key);
-            return hotel;
+            try
+            {
+                Hotel hotel = _context.Hotels.SingleOrDefault(p => p.Id == key);
+                return hotel;
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return null;
         }
 
 
 
         public Hotel Delete(int key)
         {
-            Hotel item = Get(key);
-            _context.Hotels.Remove(item);
-            _context.SaveChanges();
-            return item;
+            try
+            {
+                Hotel item = Get(key);
+                _context.Hotels.Remove(item);
+                _context.SaveChanges();
+                return item;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return null;
         }
 
         public Hotel Update(Hotel item)
+            
         {
-            Hotel hotel = _context.Hotels.SingleOrDefault(p => p.Id == item.Id);
-            if (hotel != null)
+            try
             {
-                hotel.Name = item.Name;
-                hotel.Id = item.Id;
-                hotel.Amenities = hotel.Amenities + item.Amenities;
-                hotel.Location=item.Location;
-                hotel.CustomerRating = item.CustomerRating;
-                _context.SaveChanges();
+                Hotel hotel = _context.Hotels.SingleOrDefault(p => p.Id == item.Id);
+                if (hotel != null)
+                {
+                    hotel.Name = item.Name;
+                    hotel.Id = item.Id;
+                    hotel.Amenities = hotel.Amenities + item.Amenities;
+                    hotel.Location = item.Location;
+                    hotel.CustomerRating = item.CustomerRating;
+                    _context.SaveChanges();
+                }
+                return hotel;
+
             }
-            return hotel;
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            return null;
+
         }
     }
 
