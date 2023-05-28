@@ -90,6 +90,7 @@ namespace HotelManagementAPI.Services
             sortbyrating = (List<Hotel>)_hotelrepo.GetAll().OrderByDescending(o => o.CustomerRating).ToList();
 
 
+
             if (sortbyrating != null)
             {
                 return sortbyrating;

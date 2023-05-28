@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using BookingAPI.Models;
+using BookingAPI.Interfaces;
+using BookingAPI.Services;
+
 namespace BookingAPI
 {
     public class Program
@@ -12,7 +17,14 @@ namespace BookingAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<BookingContext>(opts =>
+            {
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("MyConn"));
+            });
 
+            builder.Services.AddScoped<IRepo<int, Booking>, BookingRepo>();
+
+            builder.Services.AddScoped<IRepo<int, Billing>, BillingRepo>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

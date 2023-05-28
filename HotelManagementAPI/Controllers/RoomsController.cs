@@ -32,6 +32,7 @@ namespace HotelManagementAPI.Controllers
 
         }
 
+
         [HttpGet]
         [ProducesResponseType(typeof(Room), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,8 +45,8 @@ namespace HotelManagementAPI.Controllers
         }
 
 
-        [HttpPost]
 
+        [HttpPost]
         public ActionResult<Room> Post(Room room)
         {
             Room prod = _repo.Add(room);
