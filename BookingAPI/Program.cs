@@ -24,7 +24,7 @@ namespace BookingAPI
 
             builder.Services.AddScoped<IRepo<int, Booking>, BookingRepo>();
 
-            builder.Services.AddScoped<IRepo<int, Billing>, BillingRepo>();
+            builder.Services.AddScoped<BookingService, BookingService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

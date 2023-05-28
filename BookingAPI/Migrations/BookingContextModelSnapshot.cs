@@ -22,33 +22,6 @@ namespace BookingAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("BookingAPI.Models.Billing", b =>
-                {
-                    b.Property<int>("BillingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BillingId"), 1L, 1);
-
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalPrice")
-                        .HasColumnType("int");
-
-                    b.HasKey("BillingId");
-
-                    b.HasIndex("BookingId");
-
-                    b.ToTable("Billings");
-                });
-
             modelBuilder.Entity("BookingAPI.Models.Booking", b =>
                 {
                     b.Property<int>("BookingId")
@@ -76,23 +49,16 @@ namespace BookingAPI.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
+                    b.Property<string>("paymentstatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("price")
+                        .HasColumnType("int");
+
                     b.HasKey("BookingId");
 
                     b.ToTable("Bookings");
-                });
-
-            modelBuilder.Entity("BookingAPI.Models.Billing", b =>
-                {
-                    b.HasOne("BookingAPI.Models.Booking", null)
-                        .WithMany("Billings")
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BookingAPI.Models.Booking", b =>
-                {
-                    b.Navigation("Billings");
                 });
 #pragma warning restore 612, 618
         }

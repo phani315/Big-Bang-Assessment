@@ -12,10 +12,11 @@ namespace BookingAPI.Models
         [Required]
         public int CustomerId { get; set; }
 
-
         public int TotalPrice { get; set; }
 
-        public int PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; }
+
+
     }
 
 }

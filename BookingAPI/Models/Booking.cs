@@ -14,8 +14,11 @@ namespace BookingAPI.Models
 
         public int HotelId { get; set; }
         public int RoomId { get; set; }
+        public int price { get; set; }
         public string BookingStatus { get; set; }
-        public ICollection<Billing>? Billings { get; set; }
+        public string paymentstatus { get; set; }
+
+
 
 
 

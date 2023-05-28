@@ -5,9 +5,9 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementAPI", "HotelManagementAPI\HotelManagementAPI.csproj", "{E305E2CC-D48A-45C6-A8F4-666786BFCBC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{232586B5-AC52-4A76-A905-406ADB2BBE81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingAPI", "BookingAPI\BookingAPI.csproj", "{45C94E15-991B-4BB8-B2B7-77C2C1782245}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingAPI", "BookingAPI\BookingAPI.csproj", "{45C94E15-991B-4BB8-B2B7-77C2C1782245}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAPI", "UserAPI\UserAPI.csproj", "{1C6E1ADB-4579-4A43-953C-5AE7E470B91C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{E305E2CC-D48A-45C6-A8F4-666786BFCBC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E305E2CC-D48A-45C6-A8F4-666786BFCBC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E305E2CC-D48A-45C6-A8F4-666786BFCBC1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{232586B5-AC52-4A76-A905-406ADB2BBE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{232586B5-AC52-4A76-A905-406ADB2BBE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{232586B5-AC52-4A76-A905-406ADB2BBE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{232586B5-AC52-4A76-A905-406ADB2BBE81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45C94E15-991B-4BB8-B2B7-77C2C1782245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{45C94E15-991B-4BB8-B2B7-77C2C1782245}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45C94E15-991B-4BB8-B2B7-77C2C1782245}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45C94E15-991B-4BB8-B2B7-77C2C1782245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C6E1ADB-4579-4A43-953C-5AE7E470B91C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C6E1ADB-4579-4A43-953C-5AE7E470B91C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C6E1ADB-4579-4A43-953C-5AE7E470B91C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C6E1ADB-4579-4A43-953C-5AE7E470B91C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

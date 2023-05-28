@@ -19,16 +19,18 @@ namespace BookingAPI.Services
         {
             try
             {
+                if (item.CheckOutDate < item.CheckInDate || ValidateBookings(item))
+                {
+                    return null;
+                }
                 _context.Bookings.Add(item);
                 _context.SaveChanges();
                 return item;
             }
-            catch (Exception e)
+            catch (InvalidOperationException ioe)
             {
-                Debug.WriteLine(e.Message);
-                Debug.WriteLine(item);
+                return null;
             }
-            return null;
         }
         public ICollection<Booking> GetAll()
         {
@@ -65,10 +67,34 @@ namespace BookingAPI.Services
                 booking.RoomId  = item.RoomId;
                 booking.HotelId = item.HotelId;
                 booking.BookingStatus = item.BookingStatus;
+                booking.paymentstatus = item.paymentstatus;
                 _context.SaveChanges();
             }
             return booking;
         }
+
+
+        public bool ValidateBookings(Booking booking)
+        {
+            var bookings = _context.Bookings.ToList();
+            if (bookings.Count > 0)
+            {
+                var resultBooking = bookings.Where(b => b.HotelId== booking.HotelId && b.RoomId == booking.RoomId).ToList();
+                if (resultBooking.Count > 0)
+                {
+                    foreach (var item in resultBooking)
+                    {
+                        if ((booking.CheckInDate >= item.CheckInDate && booking.CheckInDate  <= item.CheckInDate) || (booking.CheckOutDate >= item.CheckInDate && booking.CheckOutDate <= item.CheckOutDate))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+
     }
 
 }

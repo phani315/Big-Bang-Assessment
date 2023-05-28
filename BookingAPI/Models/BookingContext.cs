@@ -12,7 +12,8 @@ namespace BookingAPI.Models
         {
 
         }
+
+
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Billing> Billings { get; set; }
     }
 }

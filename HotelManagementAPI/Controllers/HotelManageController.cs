@@ -21,7 +21,7 @@ namespace HotelManagementAPI.Controllers
 
         }
 
-
+        [Authorize(Roles ="admin")]
         [HttpGet]
         [ProducesResponseType(typeof(List<Hotel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
